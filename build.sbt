@@ -15,7 +15,8 @@ libraryDependencies ++= Seq(
   "net.databinder" %% "dispatch-http" % "0.8.5",
   "pircbot" % "pircbot" % "1.4.2",
   "org.scala-lang" % "scala-compiler" % "2.9.1",
-  "net.liftweb" %% "lift-json" % "2.4"
+  "net.liftweb" %% "lift-json" % "2.4",
+  "org.scala-tools.testing" %% "scalacheck" % "1.9"
 )
 
 // autoCompilerPlugins := true
