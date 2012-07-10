@@ -28,7 +28,7 @@ object Multibottest extends PircBot {
 
     def connect() {
         connect("irc.freenode.net")
-        val channels = if (PRODUCTION) List("#clojure.pl", "#scala.pl", "#jruby", "#ruby.pl", "#rubyonrails.pl", "#scala", "#scalaz", "#asseco.pl", "#drug.pl") else List("#multibottest")
+        val channels = if (PRODUCTION) List("#clojure.pl", "#scala.pl", "#jruby", "#ruby.pl", "#rubyonrails.pl", "#scala", "#scalaz", "#lift") else List("#multibottest")
         channels foreach joinChannel
     }
 
@@ -90,6 +90,7 @@ object Multibottest extends PircBot {
             val settings = new scala.tools.nsc.Settings(null)
             settings.usejavacp.value = true
             settings.deprecation.value = true
+            settings.YdepMethTpes.value = true
             val si = new IMain(settings) { override def parentClassLoader = Thread.currentThread.getContextClassLoader }
 
             si.quietImport("scalaz._")
@@ -115,6 +116,13 @@ object Multibottest extends PircBot {
             (jruby, scope)
         })
         captureOutput{f(jr, sc, conOut)}
+    }
+
+    import org.python.util.PythonInterpreter
+    val jythonInt = scala.collection.mutable.Map[String, PythonInterpreter]()
+    def jythonInterpreter(channel: String)(f: (PythonInterpreter, ByteArrayOutputStream) => Unit) = this.synchronized {
+        val jy = jythonInt.getOrElseUpdate(channel, new PythonInterpreter())
+        captureOutput{f(jy, conOut)}
     }
 
     var pythonSession = ""
@@ -233,7 +241,19 @@ object Multibottest extends PircBot {
                 case e => Some("unexpected: " + e)
             }
 
-        case Cmd("^" :: m :: Nil) => respondJSON2(:/("try-python.appspot.com") / "json" << compact(render( ("method", "exec") ~ ("params", List(pythonSession, m)) ~ ("id" -> "null") )),
+
+        case Cmd("^" :: m :: Nil) => jythonInterpreter(msg.channel){(jy, cout) =>
+            try {
+                //val result = jr.evalScriptlet(m, sc).toString
+                jy.exec(m)
+                sendLines(msg.channel, cout.toString)
+                //sendLines(msg.channel, result.toString)
+            } catch {
+                case e: Exception => sendMessage(msg.channel, e.getMessage)
+            }
+        }
+
+        case Cmd("^^" :: m :: Nil) => respondJSON2(:/("try-python.appspot.com") / "json" << compact(render( ("method", "exec") ~ ("params", List(pythonSession, m)) ~ ("id" -> "null") )),
                                                  :/("try-python.appspot.com") / "json" << compact(render( ("method", "start_session") ~ ("params", List[String]()) ~ ("id" -> "null") ))) {
             case JObject(JField("error", JNull) :: JField("id" , JString("null")) :: JField("result", JObject(JField("text", JString(result)) :: _)) :: Nil) => Some(result)
             case e => Some("unexpected: " + e)
