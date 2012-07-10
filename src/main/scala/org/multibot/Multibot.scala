@@ -137,7 +137,7 @@ object Multibottest extends PircBot {
             case _ => sendMessage(msg.channel, "unknown command")
         }
 
-        case "@listchans" => sendMessage(msg.channel, getChannels mkString " ")
+        // case "@listchans" => sendMessage(msg.channel, getChannels mkString " ")
 
         case "@bot" | "@bots" => sendMessage(msg.channel, ":)")
         case "@help" => sendMessage(msg.channel, "(!) scala (!reset|type|scalex), (%) ruby (%reset), (,) clojure, (>>) haskell, (^) python, (&) javascript, (##) groovy, (<prefix>paste url), lambdabot relay (" + !LAMBDABOTIGNORE.contains(msg.channel) + "), url: https://github.com/lopex/multibot")
