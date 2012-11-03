@@ -17,7 +17,8 @@ libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-compiler" % "2.9.2",
   "net.liftweb" %% "lift-json" % "2.5-SNAPSHOT",
   "org.scalacheck" %% "scalacheck" % "1.10-SNAPSHOT",
-  "net.liftweb" %% "lift-common" % "2.5-SNAPSHOT"
+  "net.liftweb" %% "lift-common" % "2.5-SNAPSHOT",
+  "org.jruby" % "jruby-complete" % "1.7.0"
 )
 
 // autoCompilerPlugins := true
