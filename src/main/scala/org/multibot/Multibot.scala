@@ -3,9 +3,11 @@ package org.multibot
 import org.jibble.pircbot.PircBot
 import dispatch._
 import Http._
-import net.liftweb.json._
-import net.liftweb.json.JsonDSL._
-import net.liftweb.json.Printer.{compact}
+import org.json4s.native.JsonMethods._
+import org.json4s.native._
+import org.json4s.JsonAST._
+import org.json4s.JsonDSL._
+
 import java.io.{PrintStream, ByteArrayOutputStream}
 
 object Multibottest extends PircBot {
