@@ -111,9 +111,9 @@ object Multibottest extends PircBot {
         // case "@listchans" => sendMessage(msg.channel, getChannels mkString " ")
 
         case "@bot" | "@bots" => sendMessage(msg.channel, ":)")
-        case "@help" => sendMessage(msg.channel, "(!!) scala (reset|type|scalex)")
+        case "@help" => sendMessage(msg.channel, "(!!!) scala (reset|type|scalex)")
 
-        case Cmd("!!" :: m :: Nil) => scalaInterpreter(msg.channel){(si, cout) =>
+        case Cmd("!!!" :: m :: Nil) => scalaInterpreter(msg.channel){(si, cout) =>
             import scala.tools.nsc.interpreter.Results._
             val lines = (si interpret m match {
                 case Success => cout.toString.replaceAll("(?m:^res[0-9]+: )", "") // + "\n" + iout.toString.replaceAll("(?m:^res[0-9]+: )", "")
@@ -124,9 +124,9 @@ object Multibottest extends PircBot {
             //.split("\n") take NUMLINES foreach (m => sendMessage(msg.channel, " " + (if (m.charAt(0) == 13) m.substring(1) else m)))
         }
 
-        case Cmd("!!type" :: m :: Nil) => scalaInterpreter(msg.channel)((si, cout) => sendMessage(msg.channel, (si.typeOfExpression(m).directObjectString)))
-        case "!!reset" => scalaInt -= msg.channel
-        case "!!reset-all" => scalaInt.clear
+        case Cmd("!!!type" :: m :: Nil) => scalaInterpreter(msg.channel)((si, cout) => sendMessage(msg.channel, (si.typeOfExpression(m).directObjectString)))
+        case "!!!reset" => scalaInt -= msg.channel
+        case "!!!reset-all" => scalaInt.clear
 
         case _ =>
     }
