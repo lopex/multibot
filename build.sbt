@@ -29,6 +29,8 @@ seq(assemblySettings: _*)
 
 // mergeStrategy in assembly := (e => MergeStrategy.first)
 
+scalacOptions ++= Seq("-feature", "-language:_")
+
 resolvers += "Sonatype Nexus Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
 resolvers += "Sonatype Nexus Repos" at "https://oss.sonatype.org/content/repositories/releases"
