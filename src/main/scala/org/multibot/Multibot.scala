@@ -20,7 +20,6 @@ object Multibottest extends PircBot {
     val LAMBDABOTIGNORE = Set("#scala", "#scalaz")
     val ADMINS = List("****")
 
-
     def main(args: Array[String]) {
         setName(BOTNAME)
         setVerbose(true)
@@ -72,14 +71,20 @@ object Multibottest extends PircBot {
     val stdErr = System.err
     val conOut = new ByteArrayOutputStream
     val conOutStream = new PrintStream(conOut)
-    
+    val conStdOut = Console.out
+    val conStdErr = Console.err
+
     def captureOutput(block: => Unit) = try {
         System setOut conOutStream
         System setErr conOutStream
+        Console setOut conOutStream
+        Console setErr conOutStream
         block
     } finally {
         System setOut stdOut
         System setErr stdErr
+        Console setOut conStdOut
+        Console setErr conStdErr
         conOut.flush
         conOut.reset
     }
@@ -92,11 +97,14 @@ object Multibottest extends PircBot {
             val settings = new scala.tools.nsc.Settings(null)
             settings.usejavacp.value = true
             settings.deprecation.value = true
-            settings.YdepMethTpes.value = true
+            // settings.YdepMethTpes.value = true
             val si = new IMain(settings) { override def parentClassLoader = Thread.currentThread.getContextClassLoader }
 
             si.quietImport("scalaz._")
             si.quietImport("Scalaz._")
+            si.quietImport("Tags._")
+            si.quietImport("reflect.runtime.universe.reify")
+
             si.quietImport("org.scalacheck.Prop._")
             si
         })
@@ -159,7 +167,7 @@ object Multibottest extends PircBot {
             (new Http with NoLogging)(url(m) >>> new PrintStream(conOut))
             serve(msg.copy(message = cmd + " " + conOut))
 
-        case Cmd("!type" :: m :: Nil) => scalaInterpreter(msg.channel)((si, cout) => sendMessage(msg.channel, si.typeOfExpression(m) map (_.toString) getOrElse "Failed to determine type."))
+        case Cmd("!type" :: m :: Nil) => scalaInterpreter(msg.channel)((si, cout) => sendMessage(msg.channel, si.typeOfExpression(m).directObjectString))
         case "!reset" => scalaInt -= msg.channel
         case "!reset-all" => scalaInt.clear
 
@@ -284,7 +292,7 @@ object Multibottest extends PircBot {
     def respondJSON2(req: Request, init: Request)(response: JValue => Option[String])(initResponse: JValue => Option[String])(implicit msg: Msg) = try {
         respond(req){line => response(JsonParser.parse(line))}
     } catch {
-        case _ =>
+        case t:Throwable =>
             respond(init){line => initResponse(JsonParser.parse(line))}
             respond(req){line => response(JsonParser.parse(line))}
     }
