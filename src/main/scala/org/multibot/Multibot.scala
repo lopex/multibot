@@ -18,7 +18,7 @@ object Multibottest extends PircBot {
     val INNUMLINES = 8
     val LAMBDABOT = "lambdabot"
     val LAMBDABOTIGNORE = Set("#scala", "#scalaz")
-    val ADMINS = List("****")
+    val ADMINS = List("imeredith", "lopex")
 
     def main(args: Array[String]) {
         setName(BOTNAME)
@@ -29,7 +29,11 @@ object Multibottest extends PircBot {
 
     def connect() {
         connect("irc.freenode.net")
-        val channels = if (PRODUCTION) List("#clojure.pl", "#scala.pl", "#jruby", "#ruby.pl", "#rubyonrails.pl", "#scala", "#scalaz", "#lift", "#playframework", "#bostonpython", "#fp-in-scala", "#progfun") else List("#multibottest")
+        val channels = if (PRODUCTION) 
+            List("#clojure.pl", "#scala.pl", "#jruby", "#ruby.pl", "#rubyonrails.pl", "#scala", "#scalaz", "#lift", "#playframework", "#bostonpython", "#fp-in-scala", "#progfun", "#scala-fr")
+        else
+            List("#multibottest", "#multibottest2")
+
         channels foreach joinChannel
     }
 
@@ -97,8 +101,9 @@ object Multibottest extends PircBot {
             val settings = new scala.tools.nsc.Settings(null)
             settings.usejavacp.value = true
             settings.deprecation.value = true
+            settings.feature.value = false
             // settings.YdepMethTpes.value = true
-            val si = new IMain(settings) { override def parentClassLoader = Thread.currentThread.getContextClassLoader }
+            val si = new IMain(settings) // { override def parentClassLoader = Thread.currentThread.getContextClassLoader }
 
             si.quietImport("scalaz._")
             si.quietImport("Scalaz._")
