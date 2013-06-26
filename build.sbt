@@ -34,6 +34,7 @@ seq(assemblySettings: _*)
 
 scalacOptions ++= Seq("-feature", "-language:_", "-deprecation", "-Xexperimental")
 
+
 // mergeStrategy in assembly := (e => MergeStrategy.first)
 
 resolvers += "Sonatype Nexus Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
