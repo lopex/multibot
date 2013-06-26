@@ -1,0 +1,1 @@
+sudo -u multibot $JAVA_HOME/bin/java -Dfile.encoding=utf-8 -Dmultibot.production=true -Djava.security.manager -Xss4m -Xmx1280M -XX:+CMSClassUnloadingEnabled -jar target/scala-2.10/multibot-assembly-1.0.jar >> multibot.log & 2>&1

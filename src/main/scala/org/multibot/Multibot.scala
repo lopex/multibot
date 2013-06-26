@@ -27,10 +27,11 @@ object Multibottest extends PircBot {
         connect()
     }
 
+
     def connect() {
         connect("irc.freenode.net")
-        val channels = if (PRODUCTION) 
-            List("#clojure.pl", "#scala.pl", "#jruby", "#ruby.pl", "#rubyonrails.pl", "#scala", "#scalaz", "#lift", "#playframework", "#bostonpython", "#fp-in-scala", "#progfun", "#scala-fr")
+        val channels = if (PRODUCTION)
+            List("#clojure.pl", "#scala.pl", "#jruby", "#ruby.pl", "#rubyonrails.pl", "#scala", "#scalaz", "#scala-fr", "#lift", "#playframework", "#bostonpython", "#fp-in-scala", "#progfun")
         else
             List("#multibottest", "#multibottest2")
 
@@ -125,6 +126,8 @@ object Multibottest extends PircBot {
             val config = new RubyInstanceConfig
             config setOutput conOutStream
             config setError conOutStream
+            config setInternalEncoding "utf-8"
+            config setExternalEncoding "utf-8"
 
             val jruby = Ruby.newInstance(config)
             val scope = new ManyVarsDynamicScope(jruby.getStaticScopeFactory.newEvalScope(jruby.getCurrentContext.getCurrentScope.getStaticScope), jruby.getCurrentContext.getCurrentScope)
@@ -232,7 +235,7 @@ object Multibottest extends PircBot {
 
         case Cmd("%" :: m :: Nil) => jrubyInterpreter(msg.channel){(jr, sc, cout) =>
             try {
-                val result = jr.evalScriptlet(m, sc).toString
+                val result = jr.evalScriptlet("# coding: utf-8\n" + m, sc).toString
                 sendLines(msg.channel, cout.toString)
                 sendLines(msg.channel, result.toString)
             } catch {

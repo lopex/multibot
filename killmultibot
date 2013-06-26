@@ -1,0 +1,2 @@
+kill $(jps | grep jar | awk '{print $1}')
+
