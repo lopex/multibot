@@ -7,7 +7,8 @@ version := "1.0"
 scalaVersion := "2.10.0"
 
 libraryDependencies ++= {
-    val scalazVersion = "7.0-SNAPSHOT"
+    val scalazVersion = "7.0.0"
+    val scalazContribVersion = "0.1.4"
     val crossVersion = CrossVersion.fullMapped{case "2.10.0" => "2.10"}
     Seq(
         "com.chuusai" %% "shapeless" % "1.2.4-SNAPSHOT" cross CrossVersion.fullMapped{case "2.10.0" => "2.10.0-RC5"},
@@ -15,6 +16,7 @@ libraryDependencies ++= {
         "org.scalaz" %% "scalaz-iteratee" % scalazVersion cross crossVersion,
         "org.scalaz" %% "scalaz-effect" % scalazVersion cross crossVersion,
         "org.scalaz" %% "scalaz-typelevel" % scalazVersion cross crossVersion,
+        "org.typelevel" %% "scalaz-contrib-210" % scalazContribVersion cross crossVersion,
         "pircbot" % "pircbot" % "1.5.0",
         "org.scala-lang" % "scala-compiler" % "2.10.0",
         "org.scalacheck" %% "scalacheck" % "1.10.1-SNAPSHOT" cross CrossVersion.full,
