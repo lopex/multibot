@@ -18,7 +18,7 @@ object Multibottest extends PircBot {
     val INNUMLINES = 8
     val LAMBDABOT = "lambdabot"
     val LAMBDABOTIGNORE = Set("#scala", "#scalaz")
-    val ADMINS = List("imeredith", "lopex")
+    val ADMINS = List("imeredith", "lopex", "tpolecat")
 
     def main(args: Array[String]) {
         setName(BOTNAME)
