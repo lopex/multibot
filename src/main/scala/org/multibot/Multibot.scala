@@ -31,7 +31,7 @@ object Multibottest extends PircBot {
     def connect() {
         connect("irc.freenode.net")
         val channels = if (PRODUCTION)
-            List("#clojure.pl", "#scala.pl", "#jruby", "#ruby.pl", "#rubyonrails.pl", "#scala", "#scalaz", "#scala-fr", "#lift", "#playframework", "#bostonpython", "#fp-in-scala", "#CourseraProgfun")
+            List("#clojure.pl", "#scala.pl", "#jruby", "#ruby.pl", "#rubyonrails.pl", "#scala", "#scalaz", "#scala-fr", "#lift", "#playframework", "#bostonpython", "#fp-in-scala", "#CourseraProgfun", "#shapeless")
         else
             List("#multibottest", "#multibottest2")
 
