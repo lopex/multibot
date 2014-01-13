@@ -19,6 +19,7 @@ libraryDependencies ++= {
         "org.scalaz" %% "scalaz-iteratee" % scalazVersion cross crossVersion,
         "org.scalaz" %% "scalaz-effect" % scalazVersion cross crossVersion,
         "org.scalaz" %% "scalaz-typelevel" % scalazVersion cross crossVersion,
+        "org.scalaz" %% "scalaz-scalacheck-binding" % scalazVersion cross crossVersion,
         "org.typelevel" %% "scalaz-contrib-210" % scalazContribVersion cross crossVersion,
         "org.scalaz" %% "scalaz-concurrent" % scalazVersion cross crossVersion,
         "pircbot" % "pircbot" % "1.5.0",
@@ -26,8 +27,8 @@ libraryDependencies ++= {
         //"org.scalacheck" %% "scalacheck" % "1.10.1-SNAPSHOT" cross scheckCrossVersion,
         "net.databinder" %% "dispatch-http" % "0.8.8",
         "org.json4s" %% "json4s-native" % "3.1.0",
-        "org.spire-math"  %% "spire" % "0.7.3" cross crossVersion,
-        "org.spire-math"  %% "spire-scalacheck-binding" % "0.7.3" cross crossVersion,
+        // "org.spire-math"  %% "spire" % "0.7.3" cross crossVersion,
+        // "org.spire-math"  %% "spire-scalacheck-binding" % "0.7.3" cross crossVersion,
         // "net.liftweb" %% "lift-util" % "2.5-SNAPSHOT",
         "org.jruby" % "jruby-complete" % "1.7.10"
 )}
