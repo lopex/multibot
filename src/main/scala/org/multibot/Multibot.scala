@@ -243,6 +243,11 @@ object Multibottest extends PircBot {
             }
         }
 
+        case Cmd("*" :: m :: Nil) => respondJSON((:/("www.tryidris.org") / "interpret" << compact(render("expression", m)))) {
+            case JArray(List(JArray(List(JString(":return"), JArray(List(JString(_), JString(output), _*)), _*)), _*)) => Some(output)
+            case e => Some("unexpected: " + e)
+        }
+
         case Cmd("&" :: m :: Nil) =>
             val src = """
                 var http = require('http');
